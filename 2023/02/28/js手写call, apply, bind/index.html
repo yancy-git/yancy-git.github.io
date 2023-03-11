@@ -313,7 +313,7 @@
       if (!path) {
         path = decodeURI(window.location.pathname);
       }
-      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@v2/dist/waline.js","css":"https://unpkg.com/@waline/client@v2/dist/waline.css","serverURL":"http://www.duckblog.top","commentCount":true,"pageview":false,"custom":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"locale":{"placeholder":"留下脚印吧~"},"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs"]}, {
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@v2/dist/waline.js","css":"https://unpkg.com/@waline/client@v2/dist/waline.css","serverURL":"https://yancy-git-github-f4sd5styh-yancy-git.vercel.app/","commentCount":true,"pageview":false,"custom":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"locale":{"placeholder":"留下脚印吧~"},"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs"]}, {
         el: '#waline_container',
         path: path,
       }));
