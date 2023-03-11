@@ -20,23 +20,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
   
-  <title>设计原则：单一职责原则 - DuckBro12</title>
+  <title>设计原则：单一职责原则 - 鸭博</title>
 
   
-    <meta name="description" content="就一个类而言，应该仅有一个引起它变化的原因。   单一职责原则（SRP）的职责被定义为“引起变化的原因”。如果我们有两个动机去改写一个方法，那么这个方法就具有两个职责。每个职责都是变化的一个轴线，如果一个方法承担了过多的职责，那么在需求的变迁过程中，需要改写这个方法的可能性就越大。   SRP原则体现为：一个对象（方法）只做一件事情。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="设计原则：单一职责原则">
-<meta property="og:url" content="http://example.com/2023/02/28/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99%EF%BC%9A%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99/index.html">
-<meta property="og:site_name" content="DuckBro12">
-<meta property="og:description" content="就一个类而言，应该仅有一个引起它变化的原因。   单一职责原则（SRP）的职责被定义为“引起变化的原因”。如果我们有两个动机去改写一个方法，那么这个方法就具有两个职责。每个职责都是变化的一个轴线，如果一个方法承担了过多的职责，那么在需求的变迁过程中，需要改写这个方法的可能性就越大。   SRP原则体现为：一个对象（方法）只做一件事情。">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-02-27T16:41:19.000Z">
-<meta property="article:modified_time" content="2023-03-10T15:46:50.901Z">
-<meta property="article:author" content="John Doe">
-<meta property="article:tag" content="设计原则">
-<meta name="twitter:card" content="summary">
-  
-  
+  <meta name="description" content="
+就一个类而言，应该仅有一个引起它变化的原因。
+
+
+单一职责原则（SRP）的职责被定义为“引起变化的原因”。如果我们有两个动机去改写一个方法，那么这个方法就具有两个职责。每个职责都是变化的一个轴线，如果一个方法承担了过多的职责，那么在需求的变迁过程中，需要改写这个方法的可能性就越大。
+
+
+SR...">
 
   <!-- feed -->
   
@@ -71,9 +65,9 @@
 
   
 
-<header class="header"><div class="logo-wrap"><a class="title" href="/"><div class="main" ff="title"><img no-lazy height="32px" src="/images/avater.jpg"/ onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/image/2659360.svg';"></div><div class="sub normal cap">吃饭睡觉打豆豆</div><div class="sub hover cap" style="opacity:0"> 还没想好</div></a></div>
+<header class="header"><div class="logo-wrap"><a class="title" href="/"><div class="main" ff="title"><img no-lazy height="32px" src="/images/avater.jpg"/ onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/image/2659360.svg';"></div><div class="sub normal cap">欢迎来到鸭哥的博客</div><div class="sub hover cap" style="opacity:0"> 吃饭睡觉打豆豆</div></a></div>
 
-<nav class="menu dis-select"></nav>
+<nav class="menu dis-select"><a class="nav-item active" href="/">文章</a><a class="nav-item" href="/notes/">笔记</a><a class="nav-item" href="/about/">关于</a><a class="nav-item" href="/share/">资源</a></nav>
 </header>
 
 
@@ -124,6 +118,18 @@
 
 
 
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body waline'>
+      
+
+<div id="waline_container" class="waline_thread"><svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+
+    </section>
+  </div>
 
 
 
@@ -291,6 +297,30 @@
 
 
 <!-- optional -->
+
+  <script>
+  function load_comment(){
+    if(!document.getElementById("waline_container"))return;
+    stellar.loadCSS('https://unpkg.com/@waline/client@v2/dist/waline.css');
+    stellar.loadScript('https://unpkg.com/@waline/client@v2/dist/waline.js', {defer:true}).then(function () {
+      const el = document.getElementById("waline_container");
+      var path = el.getAttribute('comment_id');
+      if (!path) {
+        path = decodeURI(window.location.pathname);
+      }
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@v2/dist/waline.js","css":"https://unpkg.com/@waline/client@v2/dist/waline.css","serverURL":"yancy-git-github-io-yancy-git.vercel.app","commentCount":true,"pageview":false,"custom":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"locale":{"placeholder":"留下脚印吧~"},"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs"]}, {
+        el: '#waline_container',
+        path: path,
+      }));
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    load_comment();
+  });
+
+</script>
+
 
 
 
