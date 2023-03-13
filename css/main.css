@@ -28,6 +28,17 @@
     --width-left: 288px;
   }
 }
+.duck-logo-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.duck-logo-container span {
+  margin: 0 14px;
+  color: #746969;
+  font-size: large;
+  margin-top: 4px;
+}
 :root {
   --site-bg: #f9fafb;
   --card: #fff;
