@@ -20,17 +20,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
   
-  <title>设计原则：单一职责原则 - 鸭博</title>
+  <title>关于vue3状态管理， 还要什么自行车啊 - 鸭博</title>
 
   
-  <meta name="description" content="
-就一个类而言，应该仅有一个引起它变化的原因。
+  <meta name="description" content="最近写vue3项目，需要做状态管理及其持久化，vuex用的太多了，不免觉得它过于臃肿，于是乎看了一下vue3的pinia方案，感觉用不上啊。不如直接自己写个简易版的，刚好够自己项目用的才是最合适的
 
+自己写的这个可能扩展性不够,但是我是小项目,够用就行
 
-单一职责原则（SRP）的职责被定义为“引起变化的原因”。如果我们有两个动机去改写一个方法，那么这个方法就具有两个职责。每个职责都是变化的一个轴线，如果一个方法承担了过多的职责，那么在需求的变迁过程中，需要改写这个方法的可能性就越大。
-
-
-SR...">
+在src下新建store1234567...">
 
   <!-- feed -->
   
@@ -79,9 +76,7 @@ SR...">
 <widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/blog/" placeholder="文章搜索"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
 
 
-
-<widget class="widget-wrapper recent"><div class="widget-header cap theme dis-select"><span class="name">最近更新</span></div><div class="widget-body related-posts fs14"><a class="item title" href="/2023/03/13/fastdfs%E6%90%AD%E5%BB%BA%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8/"><span class="title">fastdfs搭建分布式文件服务器</span></a><a class="item title" href="/2023/03/13/nodejs-express%E9%A1%B9%E7%9B%AE%E7%9A%84debug%E6%96%B9%E5%BC%8F/"><span class="title">nodejs express项目的debug方式</span></a><a class="item title" href="/2023/03/13/%E5%85%B3%E4%BA%8Evue3%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%EF%BC%8C-%E8%BF%98%E8%A6%81%E4%BB%80%E4%B9%88%E8%87%AA%E8%A1%8C%E8%BD%A6%E5%95%8A/"><span class="title">关于vue3状态管理， 还要什么自行车啊</span></a><a class="item title" href="/2023/03/13/vue3%E9%A1%B9%E7%9B%AE%E4%B8%ADaxios%E5%B0%81%E8%A3%85%E4%BB%A5%E5%8F%8A%E5%85%B6post%E8%AF%B7%E6%B1%82%E5%A4%B4%E7%9A%84%E5%8C%BA%E5%88%AB/"><span class="title">vue3项目中axios封装以及其post请求头的区别</span></a><a class="item title" href="/2023/03/13/Vue%20Router/"><span class="title">Vue router</span></a></div></widget>
-
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">关于vue3状态管理， 还要什么自行车啊</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8src%E4%B8%8B%E6%96%B0%E5%BB%BAstore"><span class="toc-text">在src下新建store</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BB%E5%BD%95%E6%97%B6%E5%AD%98%E5%82%A8%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="toc-text">登录时存储用户信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E5%88%B7%E6%96%B0%E6%97%B6%E4%BD%BF%E7%94%A8sessionStorage%E5%81%9A%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-text">页面刷新时使用sessionStorage做持久化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-text">最后</span></a></li></ol></div></div></widget>
 
 
 
@@ -96,19 +91,22 @@ SR...">
       
 
 
-<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></div><div id="post-meta">发布于&nbsp;<time datetime="2023-02-27T16:41:19.000Z">2023-02-28</time><br />🔥 阅读: <span id="busuanzi_value_page_pv">-</span></div></div>
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a></div><div id="post-meta">发布于&nbsp;<time datetime="2023-03-13T06:04:11.334Z">2023-03-13</time><br />🔥 阅读: <span id="busuanzi_value_page_pv">-</span></div></div>
 
 <article class='md-text content post'>
-<h1 class="article-title"><span>设计原则：单一职责原则</span></h1>
+<h1 class="article-title"><span>关于vue3状态管理， 还要什么自行车啊</span></h1>
+<p>最近写vue3项目，需要做状态管理及其持久化，vuex用的太多了，不免觉得它过于臃肿，于是乎看了一下vue3的pinia方案，感觉用不上啊。不如直接自己写个简易版的，刚好够自己项目用的才是最合适的</p>
 <blockquote>
-<p>就一个类而言，应该仅有一个引起它变化的原因。</p>
+<p>自己写的这个可能扩展性不够,但是我是小项目,够用就行</p>
 </blockquote>
-<blockquote>
-<p>单一职责原则（SRP）的职责被定义为“引起变化的原因”。如果我们有两个动机去改写一个方法，那么这个方法就具有两个职责。每个职责都是变化的一个轴线，如果一个方法承担了过多的职责，那么在需求的变迁过程中，需要改写这个方法的可能性就越大。</p>
-</blockquote>
-<blockquote>
-<p>SRP原则体现为：一个对象（方法）只做一件事情。</p>
-</blockquote>
+<h3 id="在src下新建store"><a href="#在src下新建store" class="headerlink" title="在src下新建store"></a>在src下新建store</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// store/user.js</span><br><span class="line">import &#123; ref &#125; from &quot;vue&quot;;</span><br><span class="line"></span><br><span class="line">const store = ref(&#123;</span><br><span class="line">	state: &#123;&#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">function getStore() &#123;</span><br><span class="line">	return store.value</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function setStore(val) &#123;</span><br><span class="line">    store = ref(&#123; state: val &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export const useUserStore = () =&gt; (&#123;</span><br><span class="line">  store,</span><br><span class="line">  getStore,</span><br><span class="line">  setStore,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="登录时存储用户信息"><a href="#登录时存储用户信息" class="headerlink" title="登录时存储用户信息"></a>登录时存储用户信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 代码仅作示例</span><br><span class="line">const &#123; setStore, getStore &#125; = useUserStore();</span><br><span class="line"></span><br><span class="line">login(data).then(user =&gt; &#123;</span><br><span class="line">	setStore(user)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="页面刷新时使用sessionStorage做持久化"><a href="#页面刷新时使用sessionStorage做持久化" class="headerlink" title="页面刷新时使用sessionStorage做持久化"></a>页面刷新时使用sessionStorage做持久化</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// app.vue文件</span><br><span class="line">onMounted(() =&gt; &#123;</span><br><span class="line">  if(sessionStorage.getItem(&#x27;store&#x27;)) &#123;</span><br><span class="line">    setStore(JSON.parse(sessionStorage.getItem(&#x27;store&#x27;)))</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // 这里不要用alert来测试beforeunload绑定, 触发不了的,实测. 可以打开f12看sessionStorage的变化就可以</span><br><span class="line">  window.addEventListener(&#x27;beforeunload&#x27;, () =&gt; &#123;</span><br><span class="line">    sessionStorage.setItem(&#x27;store&#x27;, JSON.stringify(getStore()))</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>以上代码仅作示例,没有写具体的其他操作, 是测过了,这一套逻辑可用, 有了响应式对象,要什么自行车啊-.-</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7054060160045547550">参考文章</a></p>
 
 
 <div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
@@ -116,7 +114,7 @@ SR...">
 
 </article>
 
-<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2023/03/10/JavaScript%E4%B8%AD%E7%9A%84%E4%BB%A3%E7%90%86%E4%B8%8E%E5%8F%91%E5%B0%84/">JavaScript中的代理与反射</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2023/02/28/js%E6%89%8B%E5%86%99call,%20apply,%20bind/">js手写call,apply,bind</a></div></section></div>
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2023/03/13/vue3%E9%A1%B9%E7%9B%AE%E4%B8%ADaxios%E5%B0%81%E8%A3%85%E4%BB%A5%E5%8F%8A%E5%85%B6post%E8%AF%B7%E6%B1%82%E5%A4%B4%E7%9A%84%E5%8C%BA%E5%88%AB/">vue3项目中axios封装以及其post请求头的区别</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2023/03/13/nodejs-express%E9%A1%B9%E7%9B%AE%E7%9A%84debug%E6%96%B9%E5%BC%8F/">nodejs express项目的debug方式</a></div></section></div>
 
 
 
