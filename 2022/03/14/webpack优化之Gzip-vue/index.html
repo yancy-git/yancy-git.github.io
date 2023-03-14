@@ -20,18 +20,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
   
-  <title>前端优化手段 - 鸭博</title>
+  <title>webpack部署阶段gzip优化 - 鸭博</title>
 
   
-  <meta name="description" content="前言前端进阶之路，做好优化必不可少，这里整理一下常用的优化手段以及理论上的优化手段但是不太常用的。根据参考文章，查了一下比较通用的整理出来
-常用、可行的优化方式减少请求数量
-图片处理
-精灵图（比较老旧的方式了）
-base64（别大量使用，会影响打包体积）
-字体图标（最通用的方案）
-
-
-减少重定...">
+  <meta name="description" content="Gzip压缩原理Gzip 压缩背后的原理，是在一个文本文件中找出一些重复出现的字符串、临时替换它们，从而使整个文件变小。
+应用场景打包过后体积过大，导致首屏加载时间长，一直白屏，体验很不好
+webpack 的 Gzip 和服务端的Gzip我们开发完成，进行部署打包的时候，配置一下webpack...">
 
   <!-- feed -->
   
@@ -80,7 +74,7 @@ base64（别大量使用，会影响打包体积）
 <widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/blog/" placeholder="文章搜索"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
 
 
-<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select duck-hidden"><span class="name">前端优化手段</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E3%80%81%E5%8F%AF%E8%A1%8C%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E5%BC%8F"><span class="toc-text">常用、可行的优化方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%8F%E5%B0%91%E8%AF%B7%E6%B1%82%E6%95%B0%E9%87%8F"><span class="toc-text">减少请求数量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5"><span class="toc-text">优化网络连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%8F%E5%B0%8F%E8%B5%84%E6%BA%90%E5%A4%A7%E5%B0%8F"><span class="toc-text">减小资源大小</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD"><span class="toc-text">优化资源加载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%8F%E5%B0%91%E9%87%8D%E7%BB%98%E5%9B%9E%E6%B5%81"><span class="toc-text">减少重绘回流</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E6%9B%B4%E5%A5%BD%E7%9A%84API"><span class="toc-text">性能更好的API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#webpack%E4%BC%98%E5%8C%96"><span class="toc-text">webpack优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Vue"><span class="toc-text">Vue</span></a></li></ol></li></ol></li></ol></div></div></widget>
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select duck-hidden"><span class="name">webpack部署阶段gzip优化</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Gzip%E5%8E%8B%E7%BC%A9%E5%8E%9F%E7%90%86"><span class="toc-text">Gzip压缩原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack-%E7%9A%84-Gzip-%E5%92%8C%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%9A%84Gzip"><span class="toc-text">webpack 的 Gzip 和服务端的Gzip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E8%AE%B0"><span class="toc-text">后记</span></a></li></ol></div></div></widget>
 
 
 
@@ -95,120 +89,27 @@ base64（别大量使用，会影响打包体积）
       
 
 
-<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a></div><div id="post-meta">发布于&nbsp;<time datetime="2023-03-13T06:25:56.000Z">2023-03-13</time><br />🔥 阅读: <span id="busuanzi_value_page_pv">-</span></div></div>
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a></div><div id="post-meta">发布于&nbsp;<time datetime="2022-03-14T10:19:16.000Z">2022-03-14</time><br />🔥 阅读: <span id="busuanzi_value_page_pv">-</span></div></div>
 
 <article class='md-text content post'>
-<h1 class="article-title"><span>前端优化手段</span></h1>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前端进阶之路，做好优化必不可少，这里整理一下常用的优化手段以及理论上的优化手段但是不太常用的。根据参考文章，查了一下比较通用的整理出来</p>
-<h2 id="常用、可行的优化方式"><a href="#常用、可行的优化方式" class="headerlink" title="常用、可行的优化方式"></a>常用、可行的优化方式</h2><h4 id="减少请求数量"><a href="#减少请求数量" class="headerlink" title="减少请求数量"></a>减少请求数量</h4><ul>
-<li>图片处理<ul>
-<li>精灵图（比较老旧的方式了）</li>
-<li>base64（别大量使用，会影响打包体积）</li>
-<li>字体图标（最通用的方案）</li>
-</ul>
-</li>
-<li>减少重定向<ul>
-<li>a标签设置空<code>href</code>会导致重定向到当前页面（主动触发，否则不会影响）</li>
-</ul>
-</li>
-<li>浏览器缓存<ul>
-<li>cach-control或expires强缓存（状态码200，会标注disk&#x2F;memory cache）</li>
-<li>last-modified或etag协商缓存，资源更新从服务器(200)拿否则使用本地缓存(304)</li>
-</ul>
-</li>
-</ul>
-<h4 id="优化网络连接"><a href="#优化网络连接" class="headerlink" title="优化网络连接"></a>优化网络连接</h4><ul>
-<li>dns预获取</li>
-<li>使用内容分发网络cdn</li>
-</ul>
-<h4 id="减小资源大小"><a href="#减小资源大小" class="headerlink" title="减小资源大小"></a>减小资源大小</h4><ul>
-<li>压缩<ul>
-<li>html压缩</li>
-<li>css压缩</li>
-<li>js压缩与混乱</li>
-<li>限制图片大小，或者使用css.filter设置例如contrast对比度舍弃一些色彩信息</li>
-<li>webp图片格式</li>
-<li>gzip压缩一般对纯文本内容可压缩到原大小的40%</li>
-</ul>
-</li>
-</ul>
-<h4 id="优化资源加载"><a href="#优化资源加载" class="headerlink" title="优化资源加载"></a>优化资源加载</h4><ul>
-<li>资源加载位置<ul>
-<li>CSS文件放在head中，先外链，后本页</li>
-<li>JS文件放在body底部，先外链，后本页</li>
-<li>处理页面、处理页面布局的JS文件放在head中，如babel-polyfill.js文件、flexible.js文件</li>
-<li>body中间尽量不写style标签和script标签</li>
-</ul>
-</li>
-<li>资源加载时机<ul>
-<li>defer&#x2F;async 异步script标签</li>
-<li>模块按需加载<ul>
-<li>ECMAScript 提案 的 import() 语法</li>
-<li>webpack 特定的 require.ensure</li>
-</ul>
-</li>
-<li>使用资源预加载preload和资源预读取prefetch<ul>
-<li>preload让浏览器提前加载指定资源，需要执行时再执行，可以加速本页面的加载速度</li>
-<li>prefetch告诉浏览器加载下一页面可能会用到的资源，可以加速下一个页面的加载速度</li>
-</ul>
-</li>
-<li>资源懒加载与资源预加载</li>
-</ul>
-</li>
-</ul>
-<h4 id="减少重绘回流"><a href="#减少重绘回流" class="headerlink" title="减少重绘回流"></a>减少重绘回流</h4><ul>
-<li>样式设置<ul>
-<li>避免使用层级较深的选择器</li>
-<li>避免使用CSS表达式</li>
-<li>css transform可以触发GPU硬件加速</li>
-</ul>
-</li>
-<li>渲染层<ul>
-<li>将需要多次重绘的元素独立为render layer渲染层，如设置absolute，可以减少重绘范围</li>
-</ul>
-</li>
-<li>DOM优化<ul>
-<li>如果要批量操作dom，使用文档片段，只批量回流一次</li>
-<li>批量操作css，提前写好class进行更换是比较好的方案</li>
-<li>可以先display：none删除元素，操作后再显示，和使用文档片段的目的一致，都是一次性回流重绘</li>
-<li>列表不要给子元素循环绑定事件，而是<strong>事件委托</strong></li>
-<li>防抖和节流</li>
-<li>及时清理环境</li>
-</ul>
-</li>
-</ul>
-<h4 id="性能更好的API"><a href="#性能更好的API" class="headerlink" title="性能更好的API"></a>性能更好的API</h4><ul>
-<li>使用<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/IntersectionObserver">IntersectionObserver</a>来实现图片可视区域的懒加载</li>
-</ul>
-<h4 id="webpack优化"><a href="#webpack优化" class="headerlink" title="webpack优化"></a>webpack优化</h4><ul>
-<li>打包公共代码<ul>
-<li>使用CommonsChunkPlugin插件，将公共模块拆出来，最终合成的文件能够在最开始的时候加载一次，便存到缓存中供后续使用。这会带来速度上的提升，因为浏览器会迅速将公共的代码从缓存中取出来，而不是每次访问一个新页面时，再去加载一个更大的文件</li>
-<li>webpack 4 将移除 CommonsChunkPlugin, 取而代之的是两个新的配置项 optimization.splitChunks 和 optimization.runtimeChunk</li>
-<li>通过设置 optimization.splitChunks.chunks: “all” 来启动默认的代码分割配置项</li>
-</ul>
-</li>
-<li>动态导入和按需加载<ul>
-<li>同上，ECMAScript 提案 的 import() 语法和 webpack 特定的 require.ensure</li>
-</ul>
-</li>
-<li>tree shaking剔除无用代码<ul>
-<li>JS的tree shaking主要通过uglifyjs插件来完成</li>
-<li>CSS的tree shaking主要通过purify CSS来实现的</li>
-</ul>
-</li>
-</ul>
-<h4 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h4><ul>
-<li>keep-alive组件保活</li>
-<li>v-for指定唯一不变key</li>
-</ul>
+<h1 class="article-title"><span>webpack部署阶段gzip优化</span></h1>
+<h2 id="Gzip压缩原理"><a href="#Gzip压缩原理" class="headerlink" title="Gzip压缩原理"></a>Gzip压缩原理</h2><p>Gzip 压缩背后的原理，是在一个文本文件中找出一些重复出现的字符串、临时替换它们，从而使整个文件变小。</p>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>打包过后体积过大，导致首屏加载时间长，一直白屏，体验很不好</p>
+<h2 id="webpack-的-Gzip-和服务端的Gzip"><a href="#webpack-的-Gzip-和服务端的Gzip" class="headerlink" title="webpack 的 Gzip 和服务端的Gzip"></a>webpack 的 Gzip 和服务端的Gzip</h2><p>我们开发完成，进行部署打包的时候，配置一下webpack:</p>
+<figure class="highlight js"><figcaption><span>vue.config.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="variable constant_">IS_PROD</span> = [<span class="string">&#x27;prod&#x27;</span>, <span class="string">&#x27;production&#x27;</span>].<span class="title function_">includes</span>(process.<span class="property">env</span>.<span class="property">NODE_ENV</span>)</span><br><span class="line"><span class="comment">//gzip压缩</span></span><br><span class="line"><span class="keyword">const</span> productionGzipExtensions = <span class="regexp">/\.(js|css|json|html)(\?.*)?$/i</span>; <span class="comment">//匹配格式</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">CompressionWebpackPlugin</span> = <span class="built_in">require</span>(<span class="string">&quot;compression-webpack-plugin&quot;</span>); </span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="attr">configureWebpack</span>: <span class="function"><span class="params">config</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> plugins = []</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable constant_">IS_PROD</span>) &#123;</span><br><span class="line">            <span class="comment">// prod添加gzip压缩</span></span><br><span class="line">            plugins.<span class="title function_">push</span>(</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">CompressionWebpackPlugin</span>(&#123;</span><br><span class="line">                    <span class="attr">filename</span>: <span class="string">&quot;[path].gz[query]&quot;</span>,</span><br><span class="line">                    <span class="attr">algorithm</span>: <span class="string">&quot;gzip&quot;</span>,</span><br><span class="line">                    <span class="attr">test</span>: productionGzipExtensions,</span><br><span class="line">                    <span class="attr">threshold</span>: <span class="number">10240</span>,<span class="comment">// 大于10kb的才被压缩</span></span><br><span class="line">                    <span class="attr">minRatio</span>: <span class="number">0.8</span><span class="comment">//压缩比例</span></span><br><span class="line">                &#125;)</span><br><span class="line">            );</span><br><span class="line">        &#125;</span><br><span class="line">        config.<span class="property">plugins</span> = [...config.<span class="property">plugins</span>, ...plugins];</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>不要以为到这里就完事了<br>如果需要线上的项目引用压缩的后的资源，我们需要配置nginx的http模块：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gzip_static on;</span><br><span class="line">gzip_http_version   <span class="number">1.1</span>;</span><br><span class="line">gzip_proxied        expired no-cache no-store private auth;</span><br><span class="line">gzip_disable        <span class="string">&quot;MSIE [1-6]\.&quot;</span>;</span><br><span class="line">gzip_vary           on;</span><br></pre></td></tr></table></figure>
+<p>关于服务端的gzip<br>这里说一下前端验证服务端是否支持Gzip方式，可以在请求中查看响应头是否存在<code>content-encoding: gzip</code><br>再多一嘴，如果是node之类的框架的话需要引入compression中间件才能支持gzip</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 服务端开启Gzip支持</span></span><br><span class="line"><span class="keyword">var</span> compression = <span class="built_in">require</span>(<span class="string">&#x27;compression&#x27;</span>);</span><br><span class="line"><span class="comment">//尽量在其他中间件前使用compression</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">compression</span>());</span><br></pre></td></tr></table></figure>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>除非特别大的项目，一般不会同时用到这俩个<br>小说说，推荐<code>compression-webpack-plugin</code>版本<code>5.0.1</code>,没看到可不怪我，高版本有坑<span class="tag-plugin emoji"><img no-lazy="" class="inline lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png"/></span></p>
 
 
-<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+<div class="article-footer reveal fs14"><section id="references"><div class="header"><span>参考资料</span></div><div class="body"><ul><li class="post-title"><a href="https://blog.csdn.net/m0_46764005/article/details/121831732" target="_blank" rel="external nofollow noopener noreferrer">webpack配置gzip压缩的正确使用姿势</a></li><li class="post-title"><a href="https://segmentfault.com/a/1190000012571492" target="_blank" rel="external nofollow noopener noreferrer">前端性能优化之gzip</a></li><li class="post-title"><a href="https://www.jianshu.com/p/fcfa1945db23" target="_blank" rel="external nofollow noopener noreferrer">webpack优化之Gzip（vue）</a></li><li class="post-title"><a href="https://duckblog.top/2023/03/13/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E6%89%8B%E6%AE%B5/" target="_blank" rel="external nofollow noopener noreferrer">前端优化手段</a></li></ul></div></section><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
 </div></section></div>
 
 </article>
 
-<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2023/03/13/vue3+express%E5%8D%9A%E5%AE%A2-token%E9%AA%8C%E8%AF%81/">vue3+express博客token验证</a></div></section></div>
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2023/02/13/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E6%89%8B%E6%AE%B5/">前端优化手段</a></div><div class="item" id="next"></div></section></div>
 
 
 

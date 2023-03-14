@@ -5,7 +5,7 @@
   <meta name="generator" content="Hexo 6.3.0">
   <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
   <meta charset="utf-8">
-  <meta name="robots" content="noindex,follow">
+  
 
   <meta http-equiv='x-dns-prefetch-control' content='on' />
   <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
@@ -20,10 +20,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
   
-  <title>标签：vue-router - 鸭博</title>
+  <title>关于前端常用跨域方式 - 鸭博</title>
 
   
-  <meta name="description" content="">
+  <meta name="description" content="同源策略同源是指协议、域名、端口三种相同，任意一种对应不上，我们就称之为跨域
+前端跨域方案jsonpJSONP实现跨域请求的原理就是动态创建script标签，利用“src”不受同源策略约束的性质来实现跨域获取数据。
+
+特性：JSONP方案属于客户端直接请求，不存在二次请求的问题；但是，不足是s...">
 
   <!-- feed -->
   
@@ -54,8 +57,10 @@
   
 
 
+
+
   <div class='l_body' id='start'>
-    <aside class='l_left' layout=''>
+    <aside class='l_left' layout='post'>
     
 
   
@@ -69,40 +74,62 @@
 <div class="widgets">
 <widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/blog/" placeholder="文章搜索"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
 
-<widget class="widget-wrapper recent"><div class="widget-header cap theme dis-select"><span class="name">最近更新</span></div><div class="widget-body related-posts fs14"><a class="item title" href="/2023/03/14/vue-express%E5%AE%9E%E7%8E%B0token%E9%AA%8C%E8%AF%81/"><span class="title" style="display: inline-block;max-width:200px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">vue+express实现token验证</span></a><a class="item title" href="/2022/03/14/webpack%E4%BC%98%E5%8C%96%E4%B9%8BGzip-vue/"><span class="title" style="display: inline-block;max-width:200px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">webpack部署阶段gzip优化</span></a><a class="item title" href="/2023/03/14/%E5%85%B3%E4%BA%8E%E5%89%8D%E7%AB%AF%E8%B7%A8%E5%9F%9F/"><span class="title" style="display: inline-block;max-width:200px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">关于前端常用跨域方式</span></a><a class="item title" href="/2023/02/13/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E6%89%8B%E6%AE%B5/"><span class="title" style="display: inline-block;max-width:200px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">前端优化手段</span></a><a class="item title" href="/2023/03/13/vue3%E9%A1%B9%E7%9B%AE%E4%B8%ADaxios%E5%B0%81%E8%A3%85%E4%BB%A5%E5%8F%8A%E5%85%B6post%E8%AF%B7%E6%B1%82%E5%A4%B4%E7%9A%84%E5%8C%BA%E5%88%AB/"><span class="title" style="display: inline-block;max-width:200px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">vue3项目中axios封装以及其post请求头的区别</span></a></div></widget>
+
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select duck-hidden"><span class="name">关于前端常用跨域方式</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8C%E6%BA%90%E7%AD%96%E7%95%A5"><span class="toc-text">同源策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%E8%B7%A8%E5%9F%9F%E6%96%B9%E6%A1%88"><span class="toc-text">前端跨域方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#jsonp"><span class="toc-text">jsonp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86"><span class="toc-text">使用代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CORS"><span class="toc-text">CORS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E8%AE%B0"><span class="toc-text">后记</span></a></li></ol></li></ol></div></div></widget>
+
+
 
 
 </div>
 
 
     </aside>
-    <div class='l_main list'>
+    <div class='l_main'>
       
-  
-
-<header class="header mobile-only"><div class="logo-wrap"><a class="title" href="/"><div class="main duck-logo-container" ff="title"><img no-lazy height="32px" src="/images/avater.jpg"/ onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/image/2659360.svg';"><span>可达鸭</span></div><div class="sub normal cap">欢迎来到可达鸭的博客</div><div class="sub hover cap" style="opacity:0"> 鼠标别放这！</div></a></div></header>
-
-
 
       
 
-  
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a></div><div id="post-meta">发布于&nbsp;<time datetime="2023-03-14T11:02:23.000Z">2023-03-14</time><br />🔥 阅读: <span id="busuanzi_value_page_pv">-</span></div></div>
+
+<article class='md-text content post'>
+<h1 class="article-title"><span>关于前端常用跨域方式</span></h1>
+<h2 id="同源策略"><a href="#同源策略" class="headerlink" title="同源策略"></a>同源策略</h2><p>同源是指协议、域名、端口三种相同，任意一种对应不上，我们就称之为跨域</p>
+<h2 id="前端跨域方案"><a href="#前端跨域方案" class="headerlink" title="前端跨域方案"></a>前端跨域方案</h2><h3 id="jsonp"><a href="#jsonp" class="headerlink" title="jsonp"></a>jsonp</h3><p>JSONP实现跨域请求的原理就是动态创建script标签，利用“src”不受同源策略约束的性质来实现跨域获取数据。</p>
+<blockquote>
+<p>特性：JSONP方案属于客户端直接请求，不存在二次请求的问题；但是，不足是script标签只能发起get请求。<br>简单例子</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>JSONP 实例<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">function</span> <span class="title function_">callbackFunction</span>(<span class="params">data</span>)&#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;i got it&quot;</span>)；</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(data);</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="variable language_">window</span>.<span class="property">onload</span>=<span class="keyword">function</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> script=<span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;script&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">    script.<span class="property">src</span>=<span class="string">&quot;https://www.runoob.com/try/ajax/jsonp.php?jsoncallback=callbackFunction&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="property">head</span>.<span class="title function_">append</span>(script)；</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用代理"><a href="#使用代理" class="headerlink" title="使用代理"></a>使用代理</h3><p>在vue项目中，我们可以通过配置代理来解决跨域问题</p>
+<figure class="highlight js"><figcaption><span>vue.config.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">devServer</span>: &#123;</span><br><span class="line">    <span class="attr">host</span>: <span class="string">&#x27;localhost&#x27;</span>, </span><br><span class="line">    <span class="attr">port</span>: <span class="string">&#x27;3000&#x27;</span>, </span><br><span class="line">    <span class="attr">proxy</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;/api&#x27;</span>: &#123;</span><br><span class="line">        <span class="attr">target</span>: <span class="string">&#x27;xxxxxxxx&#x27;</span>, <span class="comment">// 真实地址</span></span><br><span class="line">        <span class="attr">changeOrigin</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">pathRewrite</span>: &#123;</span><br><span class="line">          <span class="string">&#x27;/api&#x27;</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h3><p>严格来说这个不太属于前端范畴<span class="tag-plugin emoji"><img no-lazy="" class="inline lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png"/></span>，找你的后端同事设置Access-Control-Allow-Origin等,包括携带<code>token</code>也需要后端放开<code>Authorization</code></p>
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>话说现在jsonp其实不太常用了，比较早的方式，基本都用另外两种昂~</p>
 
 
-  
+<div class="article-footer reveal fs14"><section id="references"><div class="header"><span>参考资料</span></div><div class="body"><ul><li class="post-title"><a href="https://juejin.cn/post/7012859532766347295" target="_blank" rel="external nofollow noopener noreferrer">前端处理跨域的几种方式</a></li><li class="post-title"><a href="https://blog.csdn.net/weixin_44410783/article/details/113360475" target="_blank" rel="external nofollow noopener noreferrer">jsonp解决跨域问题</a></li></ul></div></section><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
 
-<div class="nav-wrap"><nav class="sub post cap"><a href="/">近期发布</a><a href="/categories">分类</a><a class="active" href="/tags">标签：vue-router</a><a href="/archives">归档</a></nav></div>
+</article>
 
-  <div class="post-list post"><a class="post-card post " href="/2023/03/13/Vue%20Router/">
-<article class="md-text"><h2 class="post-title">Vue router</h2><div class="excerpt"><p>动态路由&#123;path: &#39;&#39;/users/:id, component: User&#125;
-
-当路由匹配时，它的params将以this.$route.params形式暴露出来，可以使用以下方式在组件中访问&lt;div&gt;User &#123;&#123; $route.params.id &#125;&#125;&lt;/div&gt;
-
-响应路由参数变化...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-03-13T06:04:11.467Z">2023-03-13</time></span><span class="cap breadcrumb">前端学习</span></div></article>
-</a></div>
-  
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2023/03/14/vue-express%E5%AE%9E%E7%8E%B0token%E9%AA%8C%E8%AF%81/">vue+express实现token验证</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2023/03/13/windows%E4%B8%8A%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8redis%EF%BC%8C%E6%94%AF%E6%8C%81express%E6%9C%AC%E5%9C%B0%E5%BC%80%E5%8F%91/">windows上安装使用redis，支持express本地开发</a></div></section></div>
 
 
+
+
+
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body waline'>
+      
+
+<div id="waline_container" class="waline_thread"><svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+
+    </section>
+  </div>
 
 
 
@@ -302,6 +329,30 @@ show_runtime();
 
 
 <!-- optional -->
+
+  <script>
+  function load_comment(){
+    if(!document.getElementById("waline_container"))return;
+    stellar.loadCSS('https://unpkg.com/@waline/client@v2/dist/waline.css');
+    stellar.loadScript('https://unpkg.com/@waline/client@v2/dist/waline.js', {defer:true}).then(function () {
+      const el = document.getElementById("waline_container");
+      var path = el.getAttribute('comment_id');
+      if (!path) {
+        path = decodeURI(window.location.pathname);
+      }
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@v2/dist/waline.js","css":"https://unpkg.com/@waline/client@v2/dist/waline.css","serverURL":"https://comments.duckblog.top","commentCount":true,"pageview":false,"custom":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"locale":{"placeholder":"留下脚印吧~"},"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs"]}, {
+        el: '#waline_container',
+        path: path,
+      }));
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    load_comment();
+  });
+
+</script>
+
 
 
 
