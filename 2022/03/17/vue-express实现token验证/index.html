@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>vue+express实现token验证 - 鸭博</title>
+
+  
+    <meta name="description" content="Vue部分 保存token前端在登录后将token保存到localStorage,  例如 12&#x2F;&#x2F; value是后端返回的tokenlocalStorage.setItem(&amp;#x27;token&amp;#x27;, value)    axios请求拦截携带token12345678910axios.interceptors.request.use(function(config) &amp;#123;	&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue+express实现token验证">
+<meta property="og:url" content="http://example.com/2022/03/17/vue-express%E5%AE%9E%E7%8E%B0token%E9%AA%8C%E8%AF%81/index.html">
+<meta property="og:site_name" content="鸭博">
+<meta property="og:description" content="Vue部分 保存token前端在登录后将token保存到localStorage,  例如 12&#x2F;&#x2F; value是后端返回的tokenlocalStorage.setItem(&amp;#x27;token&amp;#x27;, value)    axios请求拦截携带token12345678910axios.interceptors.request.use(function(config) &amp;#123;	&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatdied.png">
+<meta property="article:published_time" content="2022-03-17T12:09:09.000Z">
+<meta property="article:modified_time" content="2023-03-21T00:25:41.137Z">
+<meta property="article:author" content="Yancy">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="Axios">
+<meta property="article:tag" content="Express">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatdied.png">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+
+  
+
+  
+
+
+  
+    
+      <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-screen-webfont/1.6.0/lxgwwenkaiscreen.css" media="all" />
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+  
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/images/avater.webp" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/image/2659360.svg';"></a><a class="title" href="/"><div class="main d-header-title" ff="title">鸭博</div><div class="sub normal cap">欢迎来到可达鸭的博客</div><div class="sub hover cap" style="opacity:0"> 鼠标别放这！</div></a></div>
+
+<nav class="menu dis-select"><a class="nav-item active" href="/">文章</a><a class="nav-item" href="/wiki/">项目</a><a class="nav-item" href="/friend/">友链</a><a class="nav-item" href="/about/">关于</a></nav>
+</header>
+
+
+<div class="widgets">
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/blog/" placeholder="文章搜索"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
+
+
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">vue+express实现token验证</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue%E9%83%A8%E5%88%86"><span class="toc-text">Vue部分 </span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E5%AD%98token"><span class="toc-text">保存token</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#axios%E8%AF%B7%E6%B1%82%E6%8B%A6%E6%88%AA%E6%90%BA%E5%B8%A6token"><span class="toc-text">axios请求拦截携带token</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#express%E9%83%A8%E5%88%86"><span class="toc-text">express部分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="toc-text">安装依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%81%E8%A3%85token%E5%B7%A5%E5%85%B7%E5%8C%85"><span class="toc-text">封装token工具包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90token"><span class="toc-text">生成token</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E9%A2%84%E6%A3%80%E8%AF%B7%E6%B1%82%E7%9A%84%E4%B8%80%E7%82%B9%E7%9F%A5%E8%AF%86"><span class="toc-text">关于预检请求的一点知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81token"><span class="toc-text">验证token</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E9%AA%8C%E8%AF%81%E4%B9%8B%E5%90%8E%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8F%96%E7%94%A8"><span class="toc-text">通过验证之后的数据取用</span></a></li></ol></li></ol></div></div></widget>
+
+
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a></div><div id="post-meta">发布于&nbsp;<time datetime="2022-03-17T12:09:09.000Z">2022-03-17</time></div></div>
+
+<article class='md-text content post'>
+<h1 class="article-title"><span>vue+express实现token验证</span></h1>
+<h2 id="Vue部分"><a href="#Vue部分" class="headerlink" title="Vue部分 "></a>Vue部分 <span class="tag-plugin emoji"><img no-lazy="" class="inline lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatdied.png"/></span></h2><h3 id="保存token"><a href="#保存token" class="headerlink" title="保存token"></a>保存token</h3><p>前端在登录后将token保存到localStorage,  例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// value是后端返回的token</span><br><span class="line">localStorage.setItem(&#x27;token&#x27;, value)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="axios请求拦截携带token"><a href="#axios请求拦截携带token" class="headerlink" title="axios请求拦截携带token"></a>axios请求拦截携带token</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">axios.interceptors.request.use(function(config) &#123;</span><br><span class="line">	//省略....</span><br><span class="line">	</span><br><span class="line">	// tokenUtils自己定义，从localStorage中get就行</span><br><span class="line">	// 这里增加 Bearer 前缀必须要，因为使用的工具包把它当作一个认证手段，简单了解了一下，它是根据这个前缀来决定解析token的算法，没有这个前缀直接报401</span><br><span class="line">	if(tokenUtils.getToken) &#123;</span><br><span class="line">        config.headers[&#x27;Authorization&#x27;] = `Bearer $&#123;tokenUtils.getToken()&#125;`</span><br><span class="line">    &#125;</span><br><span class="line">    return config</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="express部分"><a href="#express部分" class="headerlink" title="express部分"></a>express部分</h2><h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 我这里node版本是16.19.1,前端一样的,我用的yarn  也可以使用npm</span><br><span class="line"></span><br><span class="line">// 这个是用来生成token的</span><br><span class="line">yarn add jsonwebtoken -S</span><br><span class="line"></span><br><span class="line">//这个是用来解析token</span><br><span class="line">yarn add express-jwt -S</span><br></pre></td></tr></table></figure>
+
+<h3 id="封装token工具包"><a href="#封装token工具包" class="headerlink" title="封装token工具包"></a>封装token工具包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">var jwt = require(&#x27;jsonwebtoken&#x27;);</span><br><span class="line">var jwtScrect = &#x27;123&#x27;;  //签名</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 这里两个参数，一般用一个id就够了，自定义，影响不大</span><br><span class="line"> * @param &#123;*&#125; user_name </span><br><span class="line"> * @param &#123;*&#125; user_id </span><br><span class="line"> * @returns </span><br><span class="line"> */</span><br><span class="line">var setToken = function (user_name, user_id) &#123;</span><br><span class="line">    return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">        //expiresln 设置token过期的时间</span><br><span class="line">        //&#123; user_name: user_name, user_id: user_id &#125; 传入需要解析的值（ 一般为用户名，用户id 等）</span><br><span class="line">        const token = jwt.sign(&#123; name: user_name, id: user_id &#125;, jwtScrect, &#123; expiresIn: 3600 * 24 * 3 &#125;);</span><br><span class="line">        resolve(token)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 新版本已经用不到这个了,至少我这里是直接解析了。。。这个是自定义的解析函数，不传也没关系，后面会说到</span><br><span class="line"> </span><br><span class="line"> *不过这里有个token.split(&#x27; &#x27;)[1]    以前的版本就是这样的，也变相说明了Bearer就算没有作用，前面至少也要加个前缀，要不然这里会报错，想来应该是大家都习惯这么用了，新版本高度封装之后默认保留了这个习惯，当然在源码中也能看到自定义的gettoken方法</span><br><span class="line"> */</span><br><span class="line">//各个接口需要验证token的方法</span><br><span class="line">// var getToken = function (req) &#123;</span><br><span class="line">//     debugger</span><br><span class="line">//     let token = req.header[&#x27;authorization&#x27;]</span><br><span class="line">//     return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">//         if (!token) &#123;</span><br><span class="line">//             reject(&#123;</span><br><span class="line">//                 error: &#x27;no token&#x27;</span><br><span class="line">//             &#125;)</span><br><span class="line">//         &#125;</span><br><span class="line">//         else &#123;</span><br><span class="line">//             //第二种  改版后的</span><br><span class="line">//             var info = jwt.verify(token.split(&#x27; &#x27;)[1], jwtScrect);</span><br><span class="line">//             resolve(info);  //解析返回的值（sign 传入的值）</span><br><span class="line">//         &#125;</span><br><span class="line">//     &#125;)</span><br><span class="line">// &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 这里jwtScrect是我们自定义 约定好的签名，我暴露出去时为了方便在拦截的时候统一使用，也有不暴露出去的，直接在解析的时候写死，跟上面定义的jwtScrect一样就行</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    setToken,</span><br><span class="line">    jwtScrect</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="生成token"><a href="#生成token" class="headerlink" title="生成token"></a>生成token</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var tokenUtils = require(&#x27;../utils/token&#x27;)  //这就是上面那个文件，路径自己根据实际情况改</span><br><span class="line"></span><br><span class="line">// 在确认用户登录成功的逻辑中加上代码:</span><br><span class="line">tokenUtils.setToken(user.username, user.id).then(token =&gt; &#123;</span><br><span class="line">	//这是伪代码， 意思就是响应中加入token就ok，具体实现不要照抄</span><br><span class="line">    res.setToken(token)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="关于预检请求的一点知识"><a href="#关于预检请求的一点知识" class="headerlink" title="关于预检请求的一点知识"></a>关于预检请求的一点知识</h3><p>由于我们在前端部分需要自定义请求头中的<code>Authorization</code>字段传递token，所以无论我们的请求方式是哪种，都会有一个预检请求（options请求），所以我们需要在express中告诉前端允许添加自定义请求头</p>
+<p>下面这一段代码可以解决跨域问题，并定义服务器支持的content-type以及支持自定义authorization，并告诉你支持的http请求类型，并且遇到预检请求的时候直接返回200</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">app.all(&quot;*&quot;, function(req, res, next)&#123;</span><br><span class="line">  //设置允许跨域的域名，*代表允许任意域名跨域</span><br><span class="line">  res.header(&quot;Access-Control-Allow-Origin&quot;,&quot;*&quot;);</span><br><span class="line">  //允许的header类型</span><br><span class="line">  res.header(&quot;Access-Control-Allow-Headers&quot;,&quot;content-type, authorization&quot;);</span><br><span class="line">  //跨域允许的请求方式</span><br><span class="line">  res.header(&quot;Access-Control-Allow-Methods&quot;,&quot;POST,GET&quot;);</span><br><span class="line">  if (req.method.toLowerCase() == &#x27;options&#x27;)</span><br><span class="line">    res.send(200);  //让options尝试请求快速结束</span><br><span class="line">  else</span><br><span class="line">    next();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="验证token"><a href="#验证token" class="headerlink" title="验证token"></a>验证token</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const &#123; expressjwt &#125; = require(&#x27;express-jwt&#x27;)  //新版本这里就是这样需要解构，不然报错</span><br><span class="line">const &#123; jwtScrect &#125; = require(&#x27;./utils/token&#x27;)</span><br><span class="line"></span><br><span class="line">app.use(expressjwt(&#123;</span><br><span class="line">  secret: jwtScrect,     // 签名的密钥 或 PublicKey,就是我上面暴露的那个签名</span><br><span class="line">  algorithms: [&#x27;HS256&#x27;]   //我上面说的Bearer前缀在验证的时候区别解析的算法可能就是这里，也有的人用其                           //它前缀的，这里不多说</span><br><span class="line">&#125;).unless(&#123;</span><br><span class="line">  path: [&#x27;/user/login&#x27;]  // 指定路径不经过 Token 解析</span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure>
+
+<h3 id="通过验证之后的数据取用"><a href="#通过验证之后的数据取用" class="headerlink" title="通过验证之后的数据取用"></a>通过验证之后的数据取用</h3><p>例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">router.post(&#x27;/user/xxx&#x27;, (req, res, next) =&gt; &#123;</span><br><span class="line">	//这里req.auth就能拿到token解析成功的数据，这个数据包括你生成token时给定的所有信息</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2022/03/27/nodejs-express%E9%A1%B9%E7%9B%AE%E7%9A%84debug%E6%96%B9%E5%BC%8F/">nodejs-express项目的debug方式</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2022/02/27/keep-alive%E7%BB%84%E4%BB%B6%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/">keep-alive组件源码解读</a></div></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body waline'>
+      
+
+<div id="waline_container" class="waline_thread"><svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+
+    </section>
+  </div>
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@Yancy</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题废了老大劲才创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<center class="d-sitemap-clock">
+  <span id="runtime_span"></span>
+</center>
+<script type="text/javascript">
+function show_runtime() {
+    window.setTimeout("show_runtime()", 1000);
+    X = new Date("1/15/2022 00:00:00");
+    Y = new Date();
+    T = (Y.getTime() - X.getTime());
+    M = 24 * 60 * 60 * 1000;
+    a = T / M;
+    A = Math.floor(a);
+    b = (a - A) * 24;
+    B = Math.floor(b);
+    c = (b - B) * 60;
+    C = Math.floor((b - B) * 60);
+    D = Math.floor((c - C) * 60);
+    runtime_span.innerHTML = "⏱️本站已运行 " + A + "天" + B + "小时" + C + "分" + D + "秒"
+}
+show_runtime();
+</script>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function load_comment(){
+    if(!document.getElementById("waline_container"))return;
+    stellar.loadCSS('https://unpkg.com/@waline/client@v2/dist/waline.css');
+    stellar.loadScript('https://unpkg.com/@waline/client@v2/dist/waline.js', {defer:true}).then(function () {
+      const el = document.getElementById("waline_container");
+      var path = el.getAttribute('comment_id');
+      if (!path) {
+        path = decodeURI(window.location.pathname);
+      }
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@v2/dist/waline.js","css":"https://unpkg.com/@waline/client@v2/dist/waline.css","serverURL":"https://comments.duckblog.top","commentCount":true,"pageview":false,"custom":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":true,"locale":{"placeholder":"留下脚印吧~"},"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs"]}, {
+        el: '#waline_container',
+        path: path,
+      }));
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    load_comment();
+  });
+
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+<!-- hexo injector body_end start -->
+  <style>
+    .highlight {
+      position: relative;
+    }
+    .highlight .code .copy-btn{
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 4px 0.5rem;
+      opacity: 0.25;
+      font-weight: 700;
+      color: var(--theme);
+      cursor: pointer;
+      transination: opacity 0.3s;
+    }
+    .highlight .code .copy-btn:hover{
+      color: var(--text-code);
+      opacity: 0.75;
+    }
+    .highlight .code .copy-btn.success {
+      color: var(--swiper-theme-color);
+      opacity: 0.75;
+
+    }
+    
+  </style>
+  <script>
+    const codeElementArr = document.querySelectorAll('.code')
+    codeElementArr.forEach(code => {
+      const codeBeforeWidth = window.getComputedStyle(code, '::before').width.split('px')[0]
+      const codeBeforePadding = window.getComputedStyle(code, '::before').padding.split(' ').pop().split('px')[0]
+  
+      // copy btn 
+      const codeCopyBtn = document.createElement('div')
+      codeCopyBtn.classList.add('copy-btn')
+      codeCopyBtn.style.right = Number(codeBeforeWidth) + Number(codeBeforePadding) * 2 + 'px'
+      codeCopyBtn.innerText = '复制代码'
+      code.appendChild(codeCopyBtn)
+  
+      codeCopyBtn.addEventListener('click', async () => {
+        const currentCodeElement = code.children[0]?.innerText
+        await copyCode(currentCodeElement)
+
+
+        codeCopyBtn.innerText = '复制成功'
+        codeCopyBtn.classList.add('success')
+
+        setTimeout(() => {
+          codeCopyBtn.innerText = '复制代码'
+          codeCopyBtn.classList.remove('success')
+        },1000)
+      })
+    })
+    
+    async function copyCode(currentCode) {
+      console.log(currentCode)
+      console.log('复制代码')
+      if (navigator.clipboard) {
+        try {
+          await navigator.clipboard.writeText(currentCode)
+        } catch (error) {
+          // 未获得用户许可
+          console.error(error)
+        }
+      } else {
+        console.error('当前浏览器不支持此api')
+      }
+    }
+  </script>
+  <!-- hexo injector body_end end --></body>
+</html>
