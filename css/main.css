@@ -4503,7 +4503,6 @@ nav.menu a.nav-item:hover {
 @media screen and (min-width: 1400px) {
   .l_main {
     margin-left: calc(2 * var(--gap-l));
-    margin-right: calc(2 * var(--gap-l) + var(--width-left) / 2);
   }
 }
 @media screen and (min-width: 667px) {
