@@ -59,6 +59,15 @@
     
       <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-screen-webfont/1.6.0/lxgwwenkaiscreen.css" media="all" />
     
+      <link rel="stylesheet" href="/custom/css/ZYDark.css">
+    
+      <script>
+  if (window.localStorage.getItem('ZYI_Theme_Mode')==='dark' || (window.localStorage.getItem('ZYI_Theme_Mode')==='Moss' && window.matchMedia('(prefers-color-scheme: dark)').matches)){
+      document.querySelector("html").id = "ZYDark";
+  }
+</script>
+
+    
   
 </head>
 
@@ -348,6 +357,10 @@ show_runtime();
 
 
 <!-- inject -->
+
+  
+    <script type="text/javascript" src="/custom/js/ZYDark.js"></script>
+  
 
 
   </div>
