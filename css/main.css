@@ -86,9 +86,11 @@
   transition: all 0.3s;
   padding: 2px 24px;
 }
-.d-expand-button:hover {
-  box-shadow: 0 0 0 50vmax rgba(0,0,0,0.5);
-  background: transparent;
+@media (any-hover: hover) {
+  .d-expand-button {
+    box-shadow: 0 0 0 50vmax rgba(0,0,0,0.5);
+    background: transparent;
+  }
 }
 .d-rotating svg {
   transform: rotate(180deg);
