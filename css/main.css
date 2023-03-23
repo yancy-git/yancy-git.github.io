@@ -41,6 +41,25 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+.d-relative {
+  position: relative;
+}
+.d-absolute {
+  position: absolute;
+}
+.d-rank {
+  left: 4px;
+  top: 4px;
+  display: inline-block;
+  padding: 2px 4px;
+  font-size: 12px;
+  border-radius: 4px;
+  color: #fff;
+  z-index: 888;
+  background: linear-gradient(#ffcc80, #cd7100);
+  height: 12px;
+  line-height: 12px;
+}
 :root {
   --site-bg: #f9fafb;
   --card: #fff;
@@ -2784,6 +2803,15 @@ details.folding[child=iframe] >div.body {
 }
 .sites-wrap .site-card .card-link:hover >img {
   box-shadow: 0 4px 8px 0px rgba(0,0,0,0.1), 0 2px 4px 0px rgba(0,0,0,0.1), 0 4px 8px 0px rgba(0,0,0,0.1), 0 8px 16px 0px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+.site-card >.d-rank {
+  transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
+  -moz-transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
+  -webkit-transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
+  -o-transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
+}
+.site-card:hover>.d-rank {
   transform: translateY(-2px);
 }
 .tag-plugin.tabs {
