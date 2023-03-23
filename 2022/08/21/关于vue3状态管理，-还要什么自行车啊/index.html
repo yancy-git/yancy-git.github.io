@@ -355,8 +355,26 @@ show_runtime();
       }));
     });
   }
+  function fold_code() {
+    document.querySelectorAll('figure').forEach((block) => {
+      if (block.offsetHeight > 300) {
+        block.classList.add('d-collapsed');
+        block.insertAdjacentHTML('beforeend', `<span class="d-expand-button">
+          <svg t="1679580431116" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8709" width="200" height="200"><path d="M540.5696 556.81024a81.8176 81.8176 0 0 1-53.0432-19.47648l-225.4848-191.52896a81.92 81.92 0 1 1 106.0864-124.86656l172.4416 146.47296 172.4416-146.47296a81.92 81.92 0 0 1 106.0864 124.86656l-225.4848 191.52896a81.7152 81.7152 0 0 1-53.0432 19.47648z m53.06368 246.23104l225.44384-191.52896a81.92 81.92 0 1 0-106.0864-124.84608l-172.40064 146.47296-172.48256-146.47296a81.92 81.92 0 1 0-106.04544 124.86656l225.52576 191.52896a81.7152 81.7152 0 0 0 53.00224 19.47648c18.88256 0 37.76512-6.49216 53.0432-19.49696z" p-id="8710"></path></svg>
+          </span>`);
+      }
+    });
+
+    document.querySelectorAll('.d-expand-button').forEach((button) => {
+      button.addEventListener('click', (e) => {
+        e.target.closest('figure').classList.toggle('d-collapsed')
+        e.target.closest('span').classList.toggle('d-rotating')
+      });
+    });
+  }
   window.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM fully loaded and parsed');
+    fold_code();
     load_comment();
   });
 

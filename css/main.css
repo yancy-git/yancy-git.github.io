@@ -60,6 +60,83 @@
   height: 12px;
   line-height: 12px;
 }
+.d-collapsed {
+  max-height: 300px;
+  overflow-y: hidden !important;
+  position: relative !important;
+}
+.d-collapsed::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(0,0,0,0.42));
+}
+.d-expand-button {
+  animation: breath 2s ease-in-out infinite;
+  color: #fff;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  z-index: 888;
+  transition: all 0.3s;
+  padding: 2px 24px;
+}
+.d-expand-button:hover {
+  box-shadow: 0 0 0 50vmax rgba(0,0,0,0.5);
+  background: transparent;
+}
+.d-rotating svg {
+  transform: rotate(180deg);
+}
+@-moz-keyframes breath {
+  0% {
+    color: #fff;
+  }
+  50% {
+    color: #979797;
+  }
+  100% {
+    color: #fff;
+  }
+}
+@-webkit-keyframes breath {
+  0% {
+    color: #fff;
+  }
+  50% {
+    color: #979797;
+  }
+  100% {
+    color: #fff;
+  }
+}
+@-o-keyframes breath {
+  0% {
+    color: #fff;
+  }
+  50% {
+    color: #979797;
+  }
+  100% {
+    color: #fff;
+  }
+}
+@keyframes breath {
+  0% {
+    color: #fff;
+  }
+  50% {
+    color: #979797;
+  }
+  100% {
+    color: #fff;
+  }
+}
 :root {
   --site-bg: #f9fafb;
   --card: #fff;
