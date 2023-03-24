@@ -91,7 +91,7 @@
 }
 @media (any-hover: hover) {
   .d-expand-button:hover {
-    box-shadow: 0 0 0 50vmax rgba(0,0,0,0.5);
+    box-shadow: 0 0 0 100vmax rgba(0,0,0,0.5);
     background: transparent;
   }
 }
@@ -109,6 +109,9 @@
 }
 .d-index {
   z-index: 1;
+}
+.d-radius {
+  border-radius: 2px;
 }
 @-moz-keyframes breath {
   0% {
