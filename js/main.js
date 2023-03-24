@@ -77,12 +77,28 @@ const hud = {
 // defines
 
 const l_body = document.querySelector('.l_body');
+const d_mask = document.querySelector('.d-mask')
+const l_main = document.querySelector('.l_main')
+
+d_mask.addEventListener('click', (e) => {
+  if(l_body) {
+    l_body.classList.toggle("sidebar");
+    d_mask.classList.toggle('d-hidden')
+  }
+})
+
+d_mask.addEventListener('touchmove', (e) => {
+  e.preventDefault()
+  return false
+})
 
 const sidebar = {
   toggle: () => {
     if (l_body) {
       l_body.classList.add('mobile');
       l_body.classList.toggle("sidebar");
+      d_mask.classList.toggle('d-hidden')
+      l_main.classList.toggle('d-index')
     }
   }
 }

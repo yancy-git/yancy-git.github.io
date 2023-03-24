@@ -41,6 +41,9 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+.d-hidden {
+  display: none;
+}
 .d-relative {
   position: relative;
 }
@@ -94,6 +97,20 @@
 }
 .d-rotating svg {
   transform: rotate(180deg);
+}
+.d-mask {
+  z-index: 6;
+  filter: blur(10px);
+  -webkit-filter: blur(10px);
+  background: rgba(0,0,0,0.302);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.d-index {
+  z-index: 1;
 }
 @-moz-keyframes breath {
   0% {
@@ -392,6 +409,7 @@ a.button.start.gradient:hover:after {
   line-height: 0;
   font-size: 20px;
   margin: 0;
+  z-index: 999;
 }
 .l_body.mobile.sidebar .float-panel {
   box-shadow: 0 4px 8px 0px rgba(0,0,0,0.1);
