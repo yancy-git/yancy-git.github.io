@@ -90,7 +90,7 @@
   padding: 2px 24px;
 }
 @media (any-hover: hover) {
-  .d-expand-button {
+  .d-expand-button:hover {
     box-shadow: 0 0 0 50vmax rgba(0,0,0,0.5);
     background: transparent;
   }
