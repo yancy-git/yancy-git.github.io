@@ -164,6 +164,7 @@
       }));
     });
   }
+  // 代码块折叠
   function fold_code() {
     document.querySelectorAll('figure').forEach((block) => {
       if (block.offsetHeight > 300) {
@@ -181,9 +182,25 @@
       });
     });
   }
+
+  // 判断是否为移动端
+  function isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
+  // 头像附近的文字
+  function updateTitlePrompt() {
+    const target = document.querySelector('.sub.normal.cap')
+    if(!target) return
+    if(isMobile()) {
+      target.innerHTML = '项目👇除了文章其他都在这'
+    } else {
+      target.innerHTML = '导航菜单-项目-👈除了文章其他都在这'
+    }
+  }
   window.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM fully loaded and parsed');
     fold_code();
+    updateTitlePrompt();
     load_comment();
   });</script><script src="/custom/js/ZYDark.js"></script></div><style>.highlight{position:relative}.highlight .code .copy-btn{position:absolute;top:0;right:0;padding:4px .5rem;opacity:.25;font-weight:700;color:var(--theme);cursor:pointer;transination:opacity .3s}.highlight .code .copy-btn:hover{color:var(--text-code);opacity:.75}.highlight .code .copy-btn.success{color:var(--swiper-theme-color);opacity:.75}</style><script>const codeElementArr = document.querySelectorAll('.code')
     codeElementArr.forEach(code => {
